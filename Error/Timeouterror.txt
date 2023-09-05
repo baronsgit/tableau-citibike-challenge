@@ -1,0 +1,62 @@
+---------------------------------------------------------------------------
+TimeoutError                              Traceback (most recent call last)
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:466, in HTTPConnectionPool._make_request(self, conn, method, url, timeout, chunked, **httplib_request_kw)
+    462         except BaseException as e:
+    463             # Remove the TypeError from the exception chain in
+    464             # Python 3 (including for exceptions like SystemExit).
+    465             # Otherwise it looks like a bug in the code.
+--> 466             six.raise_from(e, None)
+    467 except (SocketTimeout, BaseSSLError, SocketError) as e:
+
+File :3, in raise_from(value, from_value)
+
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\site-packages\urllib3\connectionpool.py:461, in HTTPConnectionPool._make_request(self, conn, method, url, timeout, chunked, **httplib_request_kw)
+    460 try:
+--> 461     httplib_response = conn.getresponse()
+    462 except BaseException as e:
+    463     # Remove the TypeError from the exception chain in
+    464     # Python 3 (including for exceptions like SystemExit).
+    465     # Otherwise it looks like a bug in the code.
+
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\http\client.py:1375, in HTTPConnection.getresponse(self)
+   1374 try:
+-> 1375     response.begin()
+   1376 except ConnectionError:
+
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\http\client.py:318, in HTTPResponse.begin(self)
+    317 while True:
+--> 318     version, status, reason = self._read_status()
+    319     if status != CONTINUE:
+
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\http\client.py:279, in HTTPResponse._read_status(self)
+    278 def _read_status(self):
+--> 279     line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+    280     if len(line) > _MAXLINE:
+
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\socket.py:706, in SocketIO.readinto(self, b)
+    705 try:
+--> 706     return self._sock.recv_into(b)
+    707 except timeout:
+
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\ssl.py:1278, in SSLSocket.recv_into(self, buffer, nbytes, flags)
+   1275         raise ValueError(
+   1276           "non-zero flags not allowed in calls to recv_into() on %s" %
+   1277           self.__class__)
+-> 1278     return self.read(nbytes, buffer)
+   1279 else:
+
+File c:\Users\baron_esa31t4\AppData\Local\Programs\Python\Python311\Lib\ssl.py:1134, in SSLSocket.read(self, len, buffer)
+   1133 if buffer is not None:
+-> 1134     return self._sslobj.read(len, buffer)
+   1135 else:
+
+TimeoutError: The read operation timed out
+
+During handling of the above exception, another exception occurred:
+...
+--> 494         raise GeocoderUnavailable(message)
+    495 elif isinstance(error, requests.Timeout):
+    496     raise GeocoderTimedOut("Service timed out")
+
+GeocoderUnavailable: HTTPSConnectionPool(host='nominatim.openstreetmap.org', port=443): Max retries exceeded with url: /reverse?lat=40.73367&lon=-74.0625&format=json&addressdetails=1 (Caused by ReadTimeoutError("HTTPSConnectionPool(host='nominatim.openstreetmap.org', port=443): Read timed out. (read timeout=1)"))
+Output is truncated. View as a scrollable element or open in a text editor. Adjust cell output settings...
