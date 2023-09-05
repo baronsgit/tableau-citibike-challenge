@@ -5,13 +5,17 @@ from geopy.geocoders import Nominatim
 from citipy import citipy
 from pathlib import Path
 
-# def get_city_zip(lat, lon):
-#     geolocator = Nominatim(user_agent="http")
-#     location = geolocator.reverse(str(lat) + "," + str(lon))
-#     address = location.raw['address']
-#     city = address.get('city', '')
-#     zipcode = address.get('postcode', '')
-#     return city, zipcode
+from uszipcode import SearchEngine
+# search = SearchEngine(simple_zipcode=True)
+search = SearchEngine()
+# from uszipcode import Zipcode
+import numpy as np
+
+
+#define zipcode search function
+def get_cityzipcode(lat, lon):
+    result = search.by_coordinates(lat = lat, lng = lon, returns = 1)
+    return result[0].major_city, result[0].zipcode
 
 def get_weather(city):
     url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=4b2c7a0a4c3f0d2f8a1e0d4f5e4b0b5b"
@@ -26,7 +30,7 @@ def get_city_zip(lat, lon):
 
 # create a function to get the zip code from a give lat/lon using citipy
 def get_zip(lat, lon):
-    city = citipy.nearest_city(lat, lon)
+    city = citipy.city_name(lat, lon)
     return city.country_code
 
 def get_cityzip(lat, lon):
